@@ -1,0 +1,17 @@
+{
+  "title": "Monitoreo multinube (laboratorio)",
+  "uid": "lab-monitoreo",
+  "schemaVersion": 39,
+  "refresh": "10s",
+  "time": { "from": "now-30m", "to": "now" },
+  "panels": [
+    { "type": "stat", "title": "Servicio web disponible (1 = arriba)", "gridPos": { "x": 0, "y": 0, "w": 8, "h": 6 },
+      "datasource": { "uid": "prom" }, "targets": [ { "expr": "probe_success{job=\"servicio-web\"}" } ] },
+    { "type": "timeseries", "title": "Latencia HTTP (s)", "gridPos": { "x": 8, "y": 0, "w": 16, "h": 6 },
+      "datasource": { "uid": "prom" }, "targets": [ { "expr": "probe_duration_seconds{job=\"servicio-web\"}" } ] },
+    { "type": "timeseries", "title": "CPU del nodo de monitoreo (%)", "gridPos": { "x": 0, "y": 6, "w": 12, "h": 8 },
+      "datasource": { "uid": "prom" }, "targets": [ { "expr": "100 - avg(rate(node_cpu_seconds_total{mode=\"idle\"}[1m])) * 100" } ] },
+    { "type": "timeseries", "title": "Memoria disponible (MB)", "gridPos": { "x": 12, "y": 6, "w": 12, "h": 8 },
+      "datasource": { "uid": "prom" }, "targets": [ { "expr": "node_memory_MemAvailable_bytes / 1024 / 1024" } ] }
+  ]
+}
